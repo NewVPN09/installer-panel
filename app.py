@@ -3,10 +3,10 @@ import paramiko
 
 app = Flask(__name__)
 
-# NEW: Serve index.html at root
+# Serve the HTML panel at root
 @app.route("/")
 def index():
-    return send_from_directory('.', 'index.html')  # looks for index.html in current folder
+    return send_from_directory('.', 'index.html')
 
 # Existing install route
 @app.route("/install", methods=["POST"])
