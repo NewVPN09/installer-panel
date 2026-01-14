@@ -1,8 +1,15 @@
-from flask import Flask, request
+from flask import Flask, request, send_from_directory
 import paramiko
+import os
 
 app = Flask(__name__)
 
+# Serve the index.html when visiting /
+@app.route("/")
+def index():
+    return send_from_directory('.', 'index.html')  # serves index.html from current folder
+
+# Your existing install route
 @app.route("/install", methods=["POST"])
 def install():
     d = request.json
@@ -33,4 +40,6 @@ def install():
     except Exception as e:
         return f"<pre>Error: {e}</pre>", 500
 
-app.run(host="0.0.0.0", port=5000)
+# Run Flask
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
