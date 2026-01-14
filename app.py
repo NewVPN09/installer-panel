@@ -1,19 +1,17 @@
 from flask import Flask, request, send_from_directory
 import paramiko
-import os
 
 app = Flask(__name__)
 
-# Serve index.html at root
+# NEW: Serve index.html at root
 @app.route("/")
 def index():
-    return send_from_directory('.', 'index.html')  # serves index.html from current folder
+    return send_from_directory('.', 'index.html')  # looks for index.html in current folder
 
-# Install script route (your existing code)
+# Existing install route
 @app.route("/install", methods=["POST"])
 def install():
     d = request.json
-
     ip = d["ip"]
     port = int(d["port"])
     user = d["user"]
@@ -40,6 +38,5 @@ def install():
     except Exception as e:
         return f"<pre>Error: {e}</pre>", 500
 
-# Run Flask
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
