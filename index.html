@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>VPS Script Installer</title>
+</head>
+<body>
+<h2>Install Personal Script</h2>
+
+<label>VPS IP:</label><br>
+<input id="ip" placeholder="e.g. 1.2.3.4"><br>
+
+<label>SSH Port:</label><br>
+<input id="port" value="22"><br>
+
+<label>Username:</label><br>
+<input id="user" value="root"><br>
+
+<label>Password:</label><br>
+<input id="pass" type="password"><br><br>
+
+<button onclick="install()">Install Script</button>
+
+<pre id="out"></pre>
+
+<script>
+function install() {
+  document.getElementById('out').textContent = "Installing...";
+  fetch('/install', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      ip: document.getElementById('ip').value,
+      port: document.getElementById('port').value,
+      user: document.getElementById('user').value,
+      password: document.getElementById('pass').value
+    })
+  })
+  .then(r => r.text())
+  .then(t => document.getElementById('out').innerHTML = t)
+  .catch(e => document.getElementById('out').textContent = e)
+}
+</script>
+</body>
+</html>
