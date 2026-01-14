@@ -4,12 +4,12 @@ import os
 
 app = Flask(__name__)
 
-# Serve the index.html when visiting /
+# Serve index.html at root
 @app.route("/")
 def index():
     return send_from_directory('.', 'index.html')  # serves index.html from current folder
 
-# Your existing install route
+# Install script route (your existing code)
 @app.route("/install", methods=["POST"])
 def install():
     d = request.json
